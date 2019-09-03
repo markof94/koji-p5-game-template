@@ -64,18 +64,6 @@
           "type": "text"
         },
         {
-          "key": "highscoreText",
-          "name": "High Score Text",
-          "description": "Default: 'High Score:'",
-          "type": "text"
-        },
-        {
-          "key": "highscoreGainedText",
-          "name": "High Score Gained Text",
-          "description": "When you get a new high score",
-          "type": "text"
-        },
-        {
           "key": "lives",
           "name": "Max Lives",
           "description": "How many lives you initially have",

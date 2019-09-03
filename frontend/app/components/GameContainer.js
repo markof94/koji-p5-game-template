@@ -10,10 +10,10 @@ class GameContainer extends Component {
     componentWillMount() {
         //Include all scripts here
         require('script-loader!app/index.js');
-        require('script-loader!app/clickable.js');
+        require('script-loader!app/helpers/clickable.js');
         require('script-loader!app/entities.js');
         require('script-loader!app/utilities.js');
-        require('script-loader!app/easing.js');
+        require('script-loader!app/helpers/easing.js');
 
     }
 

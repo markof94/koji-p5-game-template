@@ -33,7 +33,7 @@
         {
           "key": "background",
           "name": "Background",
-          "description": "Leave empty if you want to use a solid color. Ideal size: any, but keep in mind it could deform based on screen size",
+          "description": "Leave empty if you want to use a solid color. Will stretch.",
           "type": "image"
         }
       ]

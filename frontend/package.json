@@ -5,12 +5,11 @@
   "author": "username",
   "scripts": {
     "build": "NODE_ENV=production webpack --config ./.internals/webpack.production.js --color -p --progress --hide-modules --display-optimization-bailout",
-    "postbuild": "koji-tools pwa",
-    "prestart": "koji-tools watch &",
+    "prestart": "koji-vcc watch &",
     "start": "webpack-dev-server --config ./.internals/webpack.development.js --hot --inline"
   },
   "dependencies": {
-    "koji-tools": "^0.5.45",
+    "@withkoji/vcc": "^1.0.4",
     "preact": "^8.5.2",
     "prop-types": "^15.7.2"
   },

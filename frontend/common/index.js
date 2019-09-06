@@ -1,5 +1,5 @@
 import { h, render } from 'preact';
-import Koji from 'koji-tools';
+import Koji from '@withkoji/vcc'
 import './leaderboardStyles.css';
 
 window.Koji = Koji;

@@ -82,11 +82,9 @@ Things that can be customized:
 - All game text
 - Lives
 
-## Leaderboards appearance
-
 ## NOTES
 
 Avoid resizing the game window while playing, weird stuff happens.
 
 ## Support and suggestions
-Please feel free to [contact me](https://withkoji.com/~Svarog1389) if you have any suggestions!   
+Please feel free to [join the Discord server](https://discord.gg/eQuMJF6) for community support!

@@ -4,6 +4,7 @@ let gameOver = true; //If it's true the game will render the main menu
 
 //===Game objects
 //Declare game objects here like player, enemies etc
+let floatingTexts = [];
 
 //EXAMPLE
 let nodes = [];
@@ -342,8 +343,10 @@ function loseLife() {
         gameOver = true;
 
         // Go to leaderboard submission
-        window.setScore(score);
-        window.setAppView('setScore');
+        if(score > 0){
+            submitScore();
+        }
+        
         if (sndMusic) {
             sndMusic.stop();
         }

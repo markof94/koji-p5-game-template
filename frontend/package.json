@@ -9,7 +9,7 @@
     "start": "webpack-dev-server --config ./.internals/webpack.development.js --hot --inline"
   },
   "dependencies": {
-    "@withkoji/vcc": "^1.0.4",
+    "@withkoji/vcc": "^1.0.18",
     "preact": "^8.5.2",
     "prop-types": "^15.7.2"
   },

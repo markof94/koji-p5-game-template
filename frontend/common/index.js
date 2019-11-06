@@ -4,8 +4,6 @@ import './leaderboardStyles.css';
 
 window.Koji = Koji;
 
-Koji.pageLoad();
-
 let root;
 function init() {
 	let App = require('../app/components/App').default;

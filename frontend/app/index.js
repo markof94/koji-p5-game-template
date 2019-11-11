@@ -371,10 +371,10 @@ function FloatingText(x, y, txt, color, size) {
     this.animTimer = 0;
     this.update = function () {
 
-        this.animTimer += 1 / frameRate();
+        this.animTimer += 1 / frameRate() * 1/0.65;
 
         //Get dat size bounce effect
-        this.size = Ease(EasingFunctions.easeOutElastic, this.animTimer, 1, this.maxSize, 1 / 0.65);
+        this.size = Ease(EasingFunctions.easeOutElastic, this.animTimer, 1, this.maxSize);
 
         if (this.timer < 0.3) {
             this.alpha = Smooth(this.alpha, 0, 4);
@@ -392,7 +392,7 @@ function FloatingText(x, y, txt, color, size) {
 
         fill('rgba(' + red(this.color) + ',' + green(this.color) + ',' + blue(this.color) + ',' + this.alpha + ')');
 
-        textAlign(CENTER, TOP);
+        textAlign(CENTER, BOTTOM);
         text(this.txt, this.pos.x, this.pos.y);
         pop();
     }

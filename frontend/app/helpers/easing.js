@@ -75,25 +75,14 @@ EasingFunctions = {
 //A simple function used to call any other easing function from func.js
 /*
 Example usage:
-this.pos.x = Ease(EasingFunctions.easeOutQuad, this.animTimer, this.pos.x, this.goalPos.x - this.pos.x, 1);
-this.pos.y = Ease(EasingFunctions.easeOutQuad, this.animTimer, this.pos.y, this.goalPos.y - this.pos.y, 1);
-*/
-/*
-function Ease(func, time, start, finish, duration) {
-    if ((time / duration) < 1) {
-        return finish / 2 * func(time) + start;
-    } else {
-        return -finish / 2 * ((--time) * (time - 2) - 1) + start;
-    }
-}
-
+this.pos.x = Ease(EasingFunctions.easeOutQuad, this.animTimer, this.pos.x, this.goalPos.x - this.pos.x);
+this.pos.y = Ease(EasingFunctions.easeOutQuad, this.animTimer, this.pos.y, this.goalPos.y - this.pos.y);
 */
 
-function Ease(func, time, start, finish, duration) {
+function Ease(func, time, start, finish) {
     let t = time;
     if (time > 1) {
         t = 1;
     }
     return finish * func(t) + start;
-
 }

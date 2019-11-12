@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@withkoji/vcc": "^1.0.18",
+    "md5": "^2.2.1",
     "preact": "^8.5.2",
     "prop-types": "^15.7.2"
   },

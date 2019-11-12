@@ -15,7 +15,9 @@
         "lives": 3,
         "scoreGain": "1",
         "enableCursor": true,
-        "leaderboardButtonText": "LEADERBOARD"
+        "leaderboardButtonText": "LEADERBOARD",
+        "emailInputEnabled": true,
+        "optInText": "Keep me updated!"
     },
     "@@editor": [
         {
@@ -94,6 +96,12 @@
                     "name": "Enable E-Mail Input",
                     "description": "Enable/Disable E-Mail input while submitting score.",
                     "type": "boolean"
+                },
+                {
+                    "key": "optInText",
+                    "name": "Email Opt In Text",
+                    "description": "The text displayed next to the opt in checkbox",
+                    "type": "text"
                 }
             ]
         }

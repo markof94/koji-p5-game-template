@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 import PropTypes from 'prop-types';
-import Koji from '@withkoji/vcc'
+import Koji from '@withkoji/vcc';
+import md5 from 'md5';
 
 class SetScore extends Component {
     static propTypes = {
@@ -11,6 +12,7 @@ class SetScore extends Component {
         email: '',
         name: '',
         isSubmitting: false,
+        optIn: true,
     };
 
     componentDidMount() {
@@ -19,6 +21,12 @@ class SetScore extends Component {
             this.nameInput.focus();
         }.bind(this), 100);
 
+        if (this.props.score > 0) {
+            const audioElem = document.getElementById('leaderboardAudio');
+            if (audioElem) {
+                audioElem.play();
+            }
+        }
     }
 
     handleClose = () => {
@@ -36,26 +44,27 @@ class SetScore extends Component {
                 score: this.props.score,
                 privateAttributes: {
                     email: this.state.email,
+                    optIn: this.state.optIn,
                 },
             };
+            const hash = md5(JSON.stringify(body));
 
             fetch(`${Koji.config.serviceMap.backend}/leaderboard/save`, {
                 method: 'post',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': hash,
                 },
                 body: JSON.stringify(body),
             })
                 .then((response) => response.json())
                 .then((jsonResponse) => {
-                    console.log(jsonResponse);
-
-                    window.setAppView('leaderboard');
+                    window.setAppView("leaderboard");
                 })
                 .catch(err => {
                     console.log(err);
+                    
                 });
-
         }
     }
 
@@ -93,32 +102,48 @@ class SetScore extends Component {
                                 }}
                                 type={'text'}
                                 value={this.state.name}
+                                required
                                 style={{ color: Koji.config.colors.titleColor, borderColor: Koji.config.colors.titleColor }}
                                 ref={(input) => { this.nameInput = input; }}
                             />
                         </div>
 
-                        {Koji.config.strings.emailInputEnabled ?
-                            <div className={'input-wrapper'}>
-                            <label style={{ color: Koji.config.colors.titleColor }}>{'Your Email Address (Private)'}</label>
-                            <input
-                                onChange={(event) => {
-                                    this.setState({ email: event.target.value });
-                                }}
-                                type={'email'}
-                                value={this.state.email}
-                                style={{ color: Koji.config.colors.titleColor, borderColor: Koji.config.colors.titleColor }}
-                            />
-                        </div>
-                        :<span></span>}
+                        {
+                            Koji.config.strings.emailInputEnabled &&
+                            <div>
+                                <div className={'input-wrapper'}>
+                                    <label style={{ color: Koji.config.colors.titleColor }}>{'Your Email Address (Private)'}</label>
+                                    <input
+                                        onChange={(event) => {
+                                            this.setState({ email: event.target.value });
+                                        }}
+                                        type={'email'}
+                                        value={this.state.email}
+                                        style={{ color: Koji.config.colors.titleColor, borderColor: Koji.config.colors.titleColor }}
+                                    />
+                                </div>
+                                <div className={'checkbox-wrapper'}>
+                                    <label for={'checkbox'} style={{ color: Koji.config.colors.titleColor }}>{Koji.config.strings.optInText}</label>
+                                    <input
+                                        id={'checkbox'}
+                                        onChange={(event) => {
+                                            this.setState({ optIn: event.target.checked });
+                                        }}
+                                        type={'checkbox'}
+                                        checked={this.state.optIn}
+                                        style={{ color: Koji.config.colors.titleColor, borderColor: Koji.config.colors.titleColor }}
+                                    />
+                                </div>
+                            </div>
+                        }
 
                         <button
                             disabled={this.state.isSubmitting}
-                            onClick={this.handleSubmit}
+                            htmlType={'submit'}
                             type={'submit'}
                             style={{ backgroundColor: Koji.config.colors.buttonColor, color: Koji.config.colors.buttonTextColor }}
                         >
-                           {this.state.isSubmitting ? "Submitting..." : "Submit"}
+                            {this.state.isSubmitting ? "Submitting..." : "Submit"}
                         </button>
                     </form>
 

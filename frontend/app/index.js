@@ -283,6 +283,8 @@ function keyPressed() {
         if (key == 'p') {
             console.log("Pressed: p")
 
+            submitScore();
+
         }
 
     }

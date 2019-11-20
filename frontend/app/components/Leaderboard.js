@@ -71,7 +71,7 @@ class Leaderboard extends Component {
                     {`${index + 1}. ${score.name}`}
                   </div>
                   <div className={'score'} style={{ color: Koji.config.colors.buttonTextColor }}>
-                    {score.score}
+                    {score.score.toLocaleString()}
                   </div>
                 </div>
               ))

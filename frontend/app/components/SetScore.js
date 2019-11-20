@@ -87,7 +87,7 @@ class SetScore extends Component {
                             </label>
                             <input
                                 disabled
-                                value={this.props.score}
+                                value={this.props.score.toLocaleString()}
                                 style={{ color: Koji.config.colors.titleColor, borderColor: Koji.config.colors.titleColor }}
                             />
                         </div>

@@ -13,7 +13,7 @@ class GameContainer extends Component {
         require('script-loader!app/helpers/clickable.js');
         require('script-loader!app/entities.js');
         require('script-loader!app/utilities.js');
-        require('script-loader!app/helpers/easing.js');
+        require('script-loader!app/helpers/functions.js');
         require('script-loader!app/helpers/p5-play.js');
 
     }

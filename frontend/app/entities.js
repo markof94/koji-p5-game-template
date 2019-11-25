@@ -38,6 +38,10 @@ class Entity {
 
 
     render() {
+        if(!this.img){
+            return;
+        }
+
         let size = objSize * this.sizeMod;
 
         push();

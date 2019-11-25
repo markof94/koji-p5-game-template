@@ -72,7 +72,7 @@ EasingFunctions = {
 }
 
 
-//A simple function used to call any other easing function from func.js
+//A simple function used to call any other easing function from this file
 /*
 Example usage:
 this.pos.x = Ease(EasingFunctions.easeOutQuad, this.animTimer, this.pos.x, this.goalPos.x - this.pos.x);
@@ -85,4 +85,16 @@ function Ease(func, time, start, finish) {
         t = 1;
     }
     return finish * func(t) + start;
+}
+
+
+
+//====
+
+function SineWave(amplitude, frequency, timer) {
+    return amplitude * Math.sin(timer / frequency);
+}
+
+function CosineWave(amplitude, frequency, timer) {
+    return amplitude * Math.cos(timer / frequency);
 }

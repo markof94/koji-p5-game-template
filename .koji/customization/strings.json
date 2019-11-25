@@ -17,7 +17,9 @@
     "enableCursor": true,
     "leaderboardButtonText": "LEADERBOARD",
     "emailInputEnabled": true,
-    "optInText": "Keep me updated!"
+    "optInText": "Keep me updated!",
+    "maxParticles": 150,
+    "maxParticlesMobile": 50
   },
   "@@editor": [
     {
@@ -79,6 +81,26 @@
           "key": "scoreGain",
           "name": "Score Gain",
           "description": "Basic score gain",
+          "type": "range",
+          "typeOptions": {
+            "min": 0,
+            "max": 500
+          }
+        },
+        {
+          "key": "maxParticles",
+          "name": "Maximum Particles",
+          "description": "Maximum allowed particles on desktop. Larger numbers may negatively impact performance.",
+          "type": "range",
+          "typeOptions": {
+            "min": 0,
+            "max": 500
+          }
+        },
+        {
+          "key": "maxParticlesMobile",
+          "name": "Maximum Particles - Mobile",
+          "description": "Maximum allowed particles on mobile. This is usually lower than for desktop.",
           "type": "range",
           "typeOptions": {
             "min": 0,

@@ -41,13 +41,13 @@
         {
           "key": "explosion",
           "name": "Explosion",
-          "description": "Ideal size: 96x96",
+          "description": "Ideal size: 128x128",
           "type": "image"
         },
         {
           "key": "background",
           "name": "Background",
-          "description": "Leave empty if you want to use a solid color. Will stretch.",
+          "description": "Optional. Will stretch to fill screen.",
           "type": "image"
         }
       ]

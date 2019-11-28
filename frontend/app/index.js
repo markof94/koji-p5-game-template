@@ -1,6 +1,9 @@
 let myFont; //The font we'll use throughout the app
 
-let gameOver = true; //If it's true the game will render the main menu
+const VIEW_MAIN_MENU = 0;
+const VIEW_GAME = 1;
+
+let gameView = VIEW_MAIN_MENU;
 
 //===Game objects
 //Declare game objects here like player, enemies etc
@@ -42,14 +45,11 @@ let soundImage;
 let muteImage;
 
 //===Size stuff
-let objSize; //base size modifier of all objects, calculated based on screen size
-
-//game size in tiles, using bigger numbers will decrease individual object sizes but allow more objects to fit the screen
-//Keep in mind that if you change this, you might need to change text sizes as well
-let gameSize = 18;
+let objSize;
+const gameSize = 18;
 
 let isMobile = false;
-let touching = false; //Whether the user is currently touching/clicking
+let touching = false;
 
 let cameraPositionDefault;
 let shakeTimer = 0;
@@ -106,9 +106,8 @@ function setup() {
 
     createCanvas(width, height);
 
-    //Magically determine basic object size depending on size of the screen
+    //Determine basic object size depending on size of the screen
     objSize = floor(min(floor(width / gameSize), floor(height / gameSize)) * sizeModifier);
-
     isMobile = detectMobile();
 
     //set our font in both the game and html body(needed for leaderboards)
@@ -120,7 +119,6 @@ function setup() {
     leaderboardButton = new LeaderboardButton();
 
     //Load music asynchronously and play once it's loaded
-    //This way the game will load faster
     if (Koji.config.sounds.backgroundMusic) sndMusic = loadSound(Koji.config.sounds.backgroundMusic, playMusic);
 }
 
@@ -137,7 +135,7 @@ function windowResized() {
         sizeModifier = 1;
     }
 
-    //Magically determine basic object size depending on size of the screen
+    //Determine basic object size depending on size of the screen
     objSize = floor(min(floor(width / gameSize), floor(height / gameSize)) * sizeModifier);
 
     cameraPositionDefault = createVector(camera.position.x, camera.position.y);
@@ -145,8 +143,7 @@ function windowResized() {
 
 function draw() {
 
-    //Manage cursor - show it on main menu, and hide during game, depending on game settings
-    if (!gameOver) {
+    if (gameView == VIEW_GAME) {
         if (!Koji.config.strings.enableCursor) {
             noCursor();
         }
@@ -154,21 +151,21 @@ function draw() {
         cursor(ARROW);
     }
 
-    //Draw background or a solid color
+    background(Koji.config.colors.backgroundColor);
+
     if (imgBackground) {
         background(imgBackground);
-    } else {
-        background(Koji.config.colors.backgroundColor);
     }
 
-    //===Draw UI
-    if (gameOver) {
+    if (gameView == VIEW_MAIN_MENU) {
 
         camera.off();
         drawMainMenu();
         cameraPositionDefault = createVector(camera.position.x, camera.position.y);
 
-    } else {
+    }
+
+    if (gameView == VIEW_GAME) {
 
         camera.on();
 
@@ -205,6 +202,7 @@ function draw() {
         }
 
         //===Ingame UI
+
         camera.off();
 
         //===Score draw
@@ -215,23 +213,30 @@ function draw() {
         let scoreX = width - objSize / 2;
         let scoreY = objSize / 3;
         let txtSize = Ease(EasingFunctions.outBack, scoreAnimTimer, objSize * 2.5, -objSize * 0.5);
+
+        push();
         textSize(txtSize);
         fill(Koji.config.colors.scoreColor);
         textAlign(RIGHT, TOP);
         text(score.toLocaleString(), scoreX, scoreY);
+        pop();
+        //===
 
-        //Lives draw
+        //===Lives draw
         let lifeSize = objSize;
         for (let i = 0; i < lives; i++) {
             image(imgLife, lifeSize / 2 + lifeSize * i, lifeSize / 2, lifeSize, lifeSize);
         }
+        //===
 
-        //EXAMPLE
+        //===EXAMPLE
         push();
+        fill(Koji.config.colors.scoreColor);
         textAlign(LEFT, TOP);
         textSize(objSize * 0.75);
         text("Click - Score Points\nSPACE - Shake Camera\nE - Spawn Explosion\nP - Submit Score to leaderboard", lifeSize / 2, lifeSize * 2);
         pop();
+        //===
 
         cleanup();
 
@@ -241,9 +246,7 @@ function draw() {
 }
 
 
-//===Go through objects and see which ones need to be removed
-//A good practive would be for objects to have a boolean like removable, and here you would go through all objects and remove them if they have removable = true;
-//Removing objects is important to prevent memory leaks in your game
+//Removing unused objects is important to prevent memory leaks in your game
 function cleanup() {
     for (let i = 0; i < floatingTexts.length; i++) {
         if (floatingTexts[i].timer <= 0) {
@@ -277,7 +280,7 @@ function cleanup() {
 
 //===Handle input
 function touchStarted() {
-    if (!gameOver) {
+    if (gameView == VIEW_GAME) {
         //Ingame
         touching = true;
 
@@ -309,13 +312,13 @@ function touchEnded() {
 
 //Keyboard input
 /*
-For non-ASCII keys, use the keyCode variable. You can check if the keyCode equals:
+You can check if the keyCode equals:
 
-BACKSPACE, DELETE, ENTER, RETURN, TAB, ESCAPE, SHIFT, CONTROL, OPTION, ALT, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW.
+BACKSPACE, DELETE, ENTER, RETURN, TAB, ESCAPE, SHIFT, CONTROL, OPTION, ALT, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW
 */
 
 function keyPressed() {
-    if (!gameOver) {
+    if (gameView == VIEW_GAME) {
         //Ingame
         if (keyCode == UP_ARROW) {
             console.log("up")
@@ -329,11 +332,6 @@ function keyPressed() {
         if (keyCode == RIGHT_ARROW) {
             console.log("right")
         }
-
-        if (keyCode == ESCAPE) {
-            gameOver = true;
-        }
-
         if (key == ' ') {
             console.log("Space");
             shakeTimer = 0.1;
@@ -350,11 +348,16 @@ function keyPressed() {
             spawnExplosion(camera.mouseX, camera.mouseY, 3);
         }
     }
+
+
+    if (keyCode == ESCAPE) {
+        gameView = VIEW_MAIN_MENU;
+    }
 }
 
 //Same usage as keyPressed, but is called on key released instead
 function keyReleased() {
-    if (!gameOver) {
+    if (gameView == VIEW_GAME) {
 
         //Return false here if you want to prevent arrow keys scrolling down the page while you're playing the game
         return false;
@@ -365,7 +368,7 @@ function keyReleased() {
 //This is a good place to clear all arrays like enemies, bullets etc before starting a new game
 //It gets called when you press the PLAY button
 function init() {
-    gameOver = false;
+    gameView = VIEW_GAME;
 
     score = 0;
     lives = startingLives;
@@ -382,6 +385,8 @@ function init() {
 
 //EXAMPLE
 function spawnNodes() {
+    nodes = [];
+
     let nodeCount = floor(random(80, 100));
     if (isMobile) {
         nodeCount = 30;
@@ -406,8 +411,9 @@ function addScore(amount) {
 function loseLife() {
 
     lives--;
+
     if (lives <= 0) {
-        gameOver = true;
+        gameView = VIEW_MAIN_MENU;
 
         // Go to leaderboard submission
         if (score > 0) {

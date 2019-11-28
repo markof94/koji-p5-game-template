@@ -77,6 +77,9 @@ EasingFunctions = {
 Example usage:
 this.pos.x = Ease(EasingFunctions.easeOutQuad, this.animTimer, this.pos.x, this.goalPos.x - this.pos.x);
 this.pos.y = Ease(EasingFunctions.easeOutQuad, this.animTimer, this.pos.y, this.goalPos.y - this.pos.y);
+
+//Goes from 1 to 4
+this.sizeMod = Ease(EasingFunctions.outBack, this.animTimer, 1, 3);
 */
 
 function Ease(func, time, start, finish) {
@@ -87,14 +90,36 @@ function Ease(func, time, start, finish) {
     return finish * func(t) + start;
 }
 
-
-
 //====
 
+
+/* 
+Example usage:
+
+timer += 1/frameRate();
+currentValue += SineWave(2, 0.2, timer);
+*/
 function SineWave(amplitude, frequency, timer) {
     return amplitude * Math.sin(timer / frequency);
 }
 
 function CosineWave(amplitude, frequency, timer) {
     return amplitude * Math.cos(timer / frequency);
+}
+
+
+/*
+    Formula:
+    V = ((V * (N - 1)) + W) / N; 
+
+    V - Current value
+    W - Goal value
+    N - Factor
+    The higher the factor (N), the slower V approaches W.
+    
+    Example usage, called in draw():
+    currentValue = Smooth(currentValue, goalValue, 4);
+*/
+function Smooth(current, goal, factor) {
+    return ((current * (factor - 1)) + goal) / factor;
 }

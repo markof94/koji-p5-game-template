@@ -20,10 +20,19 @@ class GameContainer extends Component {
 
     componentDidMount() {
         this.p5Game = new p5(null, document.getElementById('game-container'));
+        try {
+
+        } catch (err) {
+            console.log('did', err);
+        }
     }
 
     componentWillUnmount() {
-        this.p5Game.remove();
+        try {
+            this.p5Game.remove();
+        } catch (err) {
+            console.log('unmount', JSON.stringify(err, null, 2));
+        }
     }
 
     render() {

@@ -14,54 +14,56 @@ function drawMainMenu() {
 }
 
 function drawTitle() {
-    let titleText = Koji.config.strings.title;
-    let titleSize = floor(objSize * 2);
-    textSize(titleSize);
-
-    //Resize title until it fits the screen
-    while (textWidth(titleText) > width * 0.9) {
-        titleSize *= 0.9;
+    
+       
+        let titleText = Koji.config.strings.title;
+        let titleSize = floor(objSize * 1.75);
         textSize(titleSize);
-    }
 
-    fill(Koji.config.colors.titleColor);
-    textAlign(CENTER, TOP);
-    text(Koji.config.strings.title, width / 2, objSize * 1.5);
+        //Resize title until it fits the screen
+        while (textWidth(titleText) > width * 0.9) {
+            titleSize *= 0.99;
+            textSize(titleSize);
+        }
+
+        fill(Koji.config.colors.titleColor);
+        textAlign(CENTER, TOP);
+        text(Koji.config.strings.title, width / 2, objSize * 4);
 }
 
 function drawInstructions() {
-    let instructionsText = [];
-    instructionsText[0] = Koji.config.strings.instructions1;
-    instructionsText[1] = Koji.config.strings.instructions2;
-    instructionsText[2] = Koji.config.strings.instructions3;
+     let instructionsText = [];
+        instructionsText[0] = Koji.config.strings.instructions1;
+        instructionsText[1] = Koji.config.strings.instructions2;
+        instructionsText[2] = Koji.config.strings.instructions3;
 
-    let instructionsSize = [];
+        let instructionsSize = [];
 
-    for (let i = 0; i < instructionsText.length; i++) {
-        instructionsSize[i] = floor(objSize * 0.75);
-        textSize(instructionsSize[i]);
-
-        //Resize text until it fits the screen
-        while (textWidth(instructionsText[i]) > width * 0.9) {
-            instructionsSize[i] *= 0.9;
+        for (let i = 0; i < instructionsText.length; i++) {
+            instructionsSize[i] = floor(objSize * 0.75);
             textSize(instructionsSize[i]);
+
+            //Resize text until it fits the screen
+            while (textWidth(instructionsText[i]) > width * 0.9) {
+                instructionsSize[i] *= 0.99;
+                textSize(instructionsSize[i]);
+            }
         }
-    }
 
-    textSize(instructionsSize[0]);
-    fill(Koji.config.colors.instructionsColor);
-    textAlign(CENTER, TOP);
-    text(instructionsText[0], width / 2, objSize * 5);
+        textSize(instructionsSize[0]);
+        fill(Koji.config.colors.instructionsColor);
+        textAlign(CENTER, TOP);
+        text(instructionsText[0], width / 2, objSize * 6);
 
-    textSize(instructionsSize[1]);
-    fill(Koji.config.colors.instructionsColor);
-    textAlign(CENTER, TOP);
-    text(instructionsText[1], width / 2, objSize * 7);
+        textSize(instructionsSize[1]);
+        fill(Koji.config.colors.instructionsColor);
+        textAlign(CENTER, TOP);
+        text(instructionsText[1], width / 2, objSize * 7);
 
-    textSize(instructionsSize[2]);
-    fill(Koji.config.colors.instructionsColor);
-    textAlign(CENTER, TOP);
-    text(instructionsText[2], width / 2, objSize * 9);
+        textSize(instructionsSize[2]);
+        fill(Koji.config.colors.instructionsColor);
+        textAlign(CENTER, TOP);
+        text(instructionsText[2], width / 2, objSize * 8);
 }
 
 function playMusic() {

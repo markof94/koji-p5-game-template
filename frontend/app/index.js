@@ -375,6 +375,8 @@ function init() {
 
     //Clear out all arrays
     floatingTexts = [];
+    particles = [];
+    explosions = [];
 
 
     //EXAMPLE
